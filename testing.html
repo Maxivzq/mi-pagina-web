@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Proveedores</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            font-size: 16px; /* Ajustamos el tamaño base de fuente */
+        }
+
+        /* Encabezado */
+        header {
+            background-color: #2C3E50;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-bottom: 4px solid #3498db;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 90%; /* Ancho del contenedor al 90% del ancho de la pantalla */
+            max-width: 1200px; /* No más de 1200px de ancho */
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-container h3 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Estilo de los inputs y botones */
+        .form-container input, .form-container select, .form-container textarea, .form-container button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-container input:focus, .form-container select:focus, .form-container textarea:focus, .form-container button:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .form-container button {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Selector de categoría */
+        .category-select {
+            background-color: #ecf3f6;
+            border: 1px solid #ddd;
+        }
+
+        /* Estilos para los proveedores */
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card .info {
+            width: 100%;
+        }
+
+        .card .info .name {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #2C3E50;
+            margin-bottom: 10px;
+        }
+
+        .card .info .rubro {
+            color: #2980b9;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .card .info .description {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        /* Botón WhatsApp */
+        .whatsapp-btn {
+            background-color: #25D366;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 12px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+        }
+
+        .whatsapp-btn img {
+            width: 22px;
+            height: 22px;
+            margin-right: 10px;
+        }
+
+        /* Sección de filtro */
+        .filter-section {
+            margin-top: 20px;
+            background-color: #ecf3f6;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-label {
+            font-size: 1.1rem;
+            color: #2C3E50;
+            margin-bottom: 10px;
+        }
+
+        .category-select {
+            padding: 12px;
+            background-color: #fff;
+            font-size: 1.1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 50%;
+            margin-top: 10px;
+        }
+
+        /* Botón de eliminar */
+        .delete-btn {
+            background-color: transparent;
+            border: none;
+            color: #e74c3c;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 20px;
+        }
+
+        .delete-btn:hover {
+            color: #c0392b;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Gestión de Proveedores</h1>
+    </header>
+
+    <div class="container">
+
+        <!-- Formulario para agregar proveedores -->
+        <div class="form-container">
+            <h3>Agregar o editar un proveedor</h3>
+            <input type="text" id="proveedor-name" placeholder="Nombre del proveedor" required>
+            <input type="text" id="proveedor-phone" placeholder="Número de WhatsApp (sin + ni espacios)" required>
+            <input type="text" id="proveedor-rubro" placeholder="Rubro (por ejemplo, Herramientas, Materiales, etc.)" required>
+            <textarea id="proveedor-description" placeholder="Descripción del proveedor (opcional)" rows="4"></textarea>
+            <button onclick="agregarProveedor()">Agregar proveedor</button>
+        </div>
+
+        <!-- Filtro de rubros -->
+        <div class="filter-section">
+            <label for="category" class="category-label">Filtrar por rubro:</label>
+            <select id="category" class="category-select">
+                <option value="all">Todos</option>
+            </select>
+        </div>
+
+        <!-- Aquí se mostrarán los proveedores -->
+        <div id="contact-list"></div>
+    </div>
+
+    <script>
+        let proveedores = JSON.parse(localStorage.getItem('proveedores')) || [];
+
+        // Función para mostrar proveedores filtrados
+        function mostrarProveedores(filtro = 'all') {
+            const contactList = document.getElementById('contact-list');
+            contactList.innerHTML = '';  // Limpiar la lista
+
+            const proveedoresFiltrados = filtro === 'all' ? proveedores : proveedores.filter(p => p.rubro === filtro);
+
+            proveedoresFiltrados.forEach(proveedor => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                const info = document.createElement('div');
+                info.classList.add('info');
+
+                const name = document.createElement('div');
+                name.classList.add('name');
+                name.textContent = proveedor.name;
+
+                const rubro = document.createElement('div');
+                rubro.classList.add('rubro');
+                rubro.textContent = `Rubro: ${proveedor.rubro}`;
+
+                const description = document.createElement('div');
+                description.classList.add('description');
+                description.textContent = proveedor.description || 'Sin descripción';
+
+                const whatsappBtn = document.createElement('button');
+                whatsappBtn.classList.add('whatsapp-btn');
+                whatsappBtn.onclick = () => window.open(`https://wa.me/${proveedor.phone}`, '_blank');
+
+                const whatsappIcon = document.createElement('img');
+                whatsappIcon.src = 'whatsapp-icon.png';  // Cargar desde la misma carpeta
+                whatsappBtn.appendChild(whatsappIcon);
+                whatsappBtn.appendChild(document.createTextNode('Abrir chat'));
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.textContent = '×';
+                deleteBtn.onclick = () => eliminarProveedor(proveedor.name);
+
+                info.appendChild(name);
+                info.appendChild(rubro);
+                info.appendChild(description);
+                card.appendChild(info);
+                card.appendChild(whatsappBtn);
+                card.appendChild(deleteBtn);
+                contactList.appendChild(card);
+            });
+
+            actualizarFiltro();
+        }
+
+        // Función para actualizar el filtro de rubros
+        function actualizarFiltro() {
+            const rubros = [...new Set(proveedores.map(p => p.rubro))];
+            const categorySelect = document.getElementById('category');
+            categorySelect.innerHTML = '<option value="all">Todos</option>';
+
+            rubros.forEach(rubro => {
+                const option = document.createElement('option');
+                option.value = rubro;
+                option.textContent = rubro;
+                categorySelect.appendChild(option);
+            });
+        }
+
+        // Función para agregar o editar un proveedor
+        function agregarProveedor() {
+            const name = document.getElementById('proveedor-name').value;
+            const phone = document.getElementById('proveedor-phone').value;
+            const rubro = document.getElementById('proveedor-rubro').value;
+            const description = document.getElementById('proveedor-description').value;
+
+            if (name && phone) {
+                const proveedorExistente = proveedores.find(p => p.name === name);
+
+                if (proveedorExistente) {
+                    proveedorExistente.phone = phone;
+                    proveedorExistente.rubro = rubro;
+                    proveedorExistente.description = description;
+                    alert('Proveedor actualizado exitosamente!');
+                } else {
+                    proveedores.push({ name, rubro, phone, description });
+                    alert('Proveedor agregado exitosamente!');
+                }
+
+                localStorage.setItem('proveedores', JSON.stringify(proveedores));
+
+                document.getElementById('proveedor-name').value = '';
+                document.getElementById('proveedor-phone').value = '';
+                document.getElementById('proveedor-rubro').value = '';
+                document.getElementById('proveedor-description').value = '';
+
+                mostrarProveedores();
+            } else {
+                alert('Por favor, completa todos los campos obligatorios.');
+            }
+        }
+
+        // Función para eliminar proveedor
+        function eliminarProveedor(nombre) {
+            proveedores = proveedores.filter(p => p.name !== nombre);
+            localStorage.setItem('proveedores', JSON.stringify(proveedores));
+            mostrarProveedores();
+        }
+
+        // Mostrar proveedores cuando la página se carga
+        mostrarProveedores();
+
+    </script>
+
+</body>
+</html>
